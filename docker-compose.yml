@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  titanic-playground:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: titanic-ml-playground:latest
+    container_name: titanic-playground
+    ports:
+      - "8501:8501"
+    volumes:
+      # Persist the dataset cache so the container works offline after first run
+      - ./data:/app/data
+      # Persist saved models between container restarts
+      - ./saved_models:/app/saved_models
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
