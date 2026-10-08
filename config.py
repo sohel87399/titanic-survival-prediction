@@ -62,30 +62,40 @@ DEFAULT_RANDOM_STATE = 42
 # ── Cross-validation ───────────────────────────────────────────────────────────
 DEFAULT_CV_FOLDS = 5
 
-# ── Colour palette (Plotly-friendly) ──────────────────────────────────────────
+# ── Colour palette — Gemini-inspired ──────────────────────────────────────────
+# Primary: Google Blue, Gemini Violet, Google Green, Google Red, Gemini Teal
 PALETTE = [
-    "#636EFA",
-    "#EF553B",
-    "#00CC96",
-    "#AB63FA",
-    "#FFA15A",
-    "#19D3F3",
-    "#FF6692",
-    "#B6E880",
+    "#4285F4",   # Google Blue
+    "#A142F4",   # Gemini Violet
+    "#34A853",   # Google Green
+    "#EA4335",   # Google Red
+    "#00BCD4",   # Gemini Teal
+    "#FF6D00",   # Deep Orange accent
+    "#F9AB00",   # Google Yellow
+    "#24C1E0",   # Sky Blue
 ]
 
 MODEL_COLORS = {
-    "Logistic Regression": PALETTE[0],
-    "K-Nearest Neighbors": PALETTE[1],
-    "Decision Tree": PALETTE[2],
-    "Random Forest": PALETTE[3],
-    "Gradient Boosting": PALETTE[4],
-    "XGBoost": PALETTE[5],
-    "SVM": PALETTE[6],
-    "Neural Network": PALETTE[7],
-    "Voting Ensemble": "#7f7f7f",
-    "Stacking Ensemble": "#bcbd22",
+    "Logistic Regression":  "#4285F4",   # Google Blue
+    "K-Nearest Neighbors":  "#A142F4",   # Gemini Violet
+    "Decision Tree":        "#34A853",   # Google Green
+    "Random Forest":        "#00BCD4",   # Gemini Teal
+    "Gradient Boosting":    "#EA4335",   # Google Red
+    "XGBoost":              "#FF6D00",   # Deep Orange
+    "SVM":                  "#F9AB00",   # Yellow
+    "Neural Network":       "#24C1E0",   # Sky Blue
+    "Voting Ensemble":      "#8AB4F8",   # Light Blue
+    "Stacking Ensemble":    "#C58AF9",   # Light Violet
 }
+
+# ── Gemini gradient colours used in charts ─────────────────────────────────────
+GEMINI_COLORSCALE = [
+    [0.0,  "#1a0533"],
+    [0.25, "#4a0e8f"],
+    [0.5,  "#4285F4"],
+    [0.75, "#24C1E0"],
+    [1.0,  "#69ff97"],
+]
 
 # ── Metric display names ───────────────────────────────────────────────────────
 METRIC_NAMES = ["Accuracy", "Precision", "Recall", "F1", "ROC-AUC"]

@@ -108,16 +108,253 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    .metric-card {
-        background: #f0f2f6;
-        border-radius: 10px;
-        padding: 16px 20px;
-        text-align: center;
-        box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    /* ── Inter font (OpenAI's typeface) ── */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    html, body, [class*="css"], .stApp, .stMarkdown, .stText,
+    .stButton > button, .stSelectbox, .stMultiSelect,
+    .stSlider, .stNumberInput, .stTextInput, .stExpander,
+    .stTabs [data-baseweb="tab"], h1, h2, h3, h4, h5, h6, p, div, span {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
-    .metric-card .value { font-size: 2rem; font-weight: 700; }
-    .metric-card .label { font-size: 0.85rem; color: #555; }
-    .best-model { background: #d4edda !important; }
+
+    /* ── Global background & surface ── */
+    .stApp {
+        background: #0d0d0d;
+    }
+
+    /* ── Sidebar ── */
+    section[data-testid="stSidebar"] {
+        background: #111111 !important;
+        border-right: 1px solid #2a2a2a;
+    }
+    section[data-testid="stSidebar"] .stMarkdown h1,
+    section[data-testid="stSidebar"] .stMarkdown h2,
+    section[data-testid="stSidebar"] .stMarkdown h3 {
+        color: #ececec;
+        letter-spacing: -0.02em;
+    }
+
+    /* ── Dividers ── */
+    hr {
+        border: none;
+        border-top: 1px solid #2a2a2a !important;
+        margin: 1rem 0 !important;
+    }
+
+    /* ── Tab bar ── */
+    .stTabs [data-baseweb="tab-list"] {
+        background: #111111;
+        border-radius: 12px;
+        padding: 4px;
+        gap: 4px;
+        border: 1px solid #2a2a2a;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background: transparent;
+        border-radius: 8px;
+        color: #888;
+        font-weight: 500;
+        font-size: 0.85rem;
+        padding: 6px 14px;
+        transition: all 0.2s ease;
+        border: none;
+    }
+    .stTabs [aria-selected="true"] {
+        background: #10a37f !important;
+        color: #ffffff !important;
+        font-weight: 600;
+    }
+    .stTabs [data-baseweb="tab"]:hover:not([aria-selected="true"]) {
+        background: #1e1e1e;
+        color: #ececec;
+    }
+    .stTabs [data-baseweb="tab-highlight"] {
+        display: none;
+    }
+
+    /* ── Headings ── */
+    h1 { font-size: 2rem !important; font-weight: 700 !important; letter-spacing: -0.03em !important; color: #ececec !important; }
+    h2 { font-size: 1.4rem !important; font-weight: 600 !important; letter-spacing: -0.02em !important; color: #d4d4d4 !important; }
+    h3 { font-size: 1.1rem !important; font-weight: 600 !important; letter-spacing: -0.01em !important; color: #c4c4c4 !important; }
+
+    /* ── Metric cards ── */
+    [data-testid="stMetric"] {
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        border-radius: 12px;
+        padding: 16px 20px;
+        transition: border-color 0.2s;
+    }
+    [data-testid="stMetric"]:hover {
+        border-color: #10a37f;
+    }
+    [data-testid="stMetricLabel"] {
+        font-size: 0.75rem !important;
+        font-weight: 500 !important;
+        color: #888 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+    [data-testid="stMetricValue"] {
+        font-size: 1.7rem !important;
+        font-weight: 700 !important;
+        color: #ececec !important;
+        letter-spacing: -0.02em;
+    }
+
+    /* ── Custom metric-card class ── */
+    .metric-card {
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        border-radius: 12px;
+        padding: 18px 22px;
+        text-align: center;
+        transition: border-color 0.2s, transform 0.15s;
+    }
+    .metric-card:hover { border-color: #10a37f; transform: translateY(-1px); }
+    .metric-card .value { font-size: 2rem; font-weight: 700; color: #ececec; letter-spacing: -0.02em; }
+    .metric-card .label { font-size: 0.78rem; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+    .best-model { border-color: #10a37f !important; background: #0d2b22 !important; }
+
+    /* ── Buttons ── */
+    .stButton > button {
+        background: #10a37f !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        font-size: 0.875rem !important;
+        padding: 10px 20px !important;
+        letter-spacing: 0.01em;
+        transition: background 0.2s, transform 0.15s !important;
+    }
+    .stButton > button:hover {
+        background: #0d8a6b !important;
+        transform: translateY(-1px) !important;
+    }
+    .stButton > button:active {
+        transform: translateY(0px) !important;
+    }
+
+    /* ── Download buttons ── */
+    .stDownloadButton > button {
+        background: transparent !important;
+        color: #10a37f !important;
+        border: 1px solid #10a37f !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+    }
+    .stDownloadButton > button:hover {
+        background: #0d2b22 !important;
+    }
+
+    /* ── Input widgets ── */
+    .stSelectbox > div > div,
+    .stMultiSelect > div > div,
+    .stTextInput > div > div > input,
+    .stNumberInput > div > div > input {
+        background: #1a1a1a !important;
+        border: 1px solid #2a2a2a !important;
+        border-radius: 8px !important;
+        color: #ececec !important;
+        font-size: 0.875rem !important;
+    }
+    .stSelectbox > div > div:focus-within,
+    .stMultiSelect > div > div:focus-within,
+    .stTextInput > div > div > input:focus,
+    .stNumberInput > div > div > input:focus {
+        border-color: #10a37f !important;
+        box-shadow: 0 0 0 2px rgba(16, 163, 127, 0.2) !important;
+    }
+
+    /* ── Slider ── */
+    .stSlider [data-baseweb="slider"] [role="slider"] {
+        background: #10a37f !important;
+        border-color: #10a37f !important;
+    }
+
+    /* ── Dataframes & tables ── */
+    .stDataFrame {
+        border: 1px solid #2a2a2a !important;
+        border-radius: 12px !important;
+        overflow: hidden;
+    }
+    .stDataFrame thead th {
+        background: #1a1a1a !important;
+        color: #888 !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        border-bottom: 1px solid #2a2a2a !important;
+    }
+    .stDataFrame tbody tr:hover td {
+        background: #1e1e1e !important;
+    }
+
+    /* ── Expanders ── */
+    .stExpander {
+        background: #1a1a1a !important;
+        border: 1px solid #2a2a2a !important;
+        border-radius: 10px !important;
+    }
+    .stExpander header {
+        font-weight: 600 !important;
+        color: #ececec !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* ── Alerts & info boxes ── */
+    .stInfo, [data-testid="stInfo"] {
+        background: #0d1f2d !important;
+        border: 1px solid #1a4a6b !important;
+        border-radius: 10px !important;
+        color: #7ab3d4 !important;
+    }
+    .stSuccess, [data-testid="stSuccess"] {
+        background: #0d2b22 !important;
+        border: 1px solid #10a37f !important;
+        border-radius: 10px !important;
+        color: #4fd1a5 !important;
+    }
+    .stWarning, [data-testid="stWarning"] {
+        background: #2b1f0d !important;
+        border: 1px solid #a37f10 !important;
+        border-radius: 10px !important;
+        color: #d1a54f !important;
+    }
+    .stError, [data-testid="stError"] {
+        background: #2b0d0d !important;
+        border: 1px solid #a31010 !important;
+        border-radius: 10px !important;
+        color: #d14f4f !important;
+    }
+
+    /* ── Progress bar ── */
+    .stProgress > div > div > div > div {
+        background: linear-gradient(90deg, #10a37f, #0d8a6b) !important;
+        border-radius: 4px;
+    }
+
+    /* ── Plotly chart containers ── */
+    .js-plotly-plot {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* ── Code blocks ── */
+    .stCodeBlock {
+        background: #1a1a1a !important;
+        border: 1px solid #2a2a2a !important;
+        border-radius: 10px !important;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0d0d0d; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10a37f; }
     </style>
     """,
     unsafe_allow_html=True,
