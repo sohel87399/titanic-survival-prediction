@@ -1,6 +1,14 @@
 # 🚢 Titanic ML Playground
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://titanic-survival-prediction-bndkb979xavgherjmjuzyy.streamlit.app/)
+
 An interactive machine-learning dashboard inspired by TensorFlow Playground — train, tune, compare, and explain 8 classifiers on the Titanic dataset, all from a live UI with zero code.
+
+### 🌐 Live Demo
+
+**Try it now: [titanic-survival-prediction.streamlit.app](https://titanic-survival-prediction-bndkb979xavgherjmjuzyy.streamlit.app/)**
+
+No installation needed. Open the link, adjust the sliders, and the models retrain instantly.
 
 ---
 
@@ -72,6 +80,8 @@ URL / local CSV
 ---
 
 ## 🚀 Quick Start (local)
+
+> Prefer not to install anything? Use the [live demo](https://titanic-survival-prediction-bndkb979xavgherjmjuzyy.streamlit.app/).
 
 ### Prerequisites
 
