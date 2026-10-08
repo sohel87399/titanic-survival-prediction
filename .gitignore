@@ -27,8 +27,8 @@ htmlcov/
 data/*.csv
 saved_models/*.joblib
 
-# Streamlit
-.streamlit/
+# Streamlit (keep config for Cloud deployment, ignore secrets)
+.streamlit/secrets.toml
 
 # IDE
 .vscode/
